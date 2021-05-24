@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="icon.ico" />
+    <script
+      type="text/javascript"
+      src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+    ></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <title>Document</title>
+    <script>
+      var dataset = [];
+      var lbls = [];
+      fetch("http://localhost:8000/sample2.json")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data[2000]);
+          for (i = 2000; i <= 2020; i++) {
+            dataset.push(data[i]);
+            lbls.push(i);
+          }
+          $("#container").highcharts({
+            chart: {
+              type: "column",
+            },
+            title: {
+              text: "Bar Plot of Company Registration by Year",
+              style: {
+                fontSize: "2.3rem",
+              },
+            },
+            xAxis: {
+              type: "category",
+              allowDecimals: false,
+              title: {
+                text: "",
+              },
+              categories: lbls,
+              labels: {
+                style: {
+                  fontSize: "1.3em",
+                },
+              },
+            },
+            yAxis: {
+              title: {
+                text: "Registrations",
+                style: {
+                  fontSize: "2em",
+                },
+              },
+              labels: {
+                style: {
+                  fontSize: "1.3em",
+                },
+              },
+            },
+            legend: {
+              itemStyle: {
+                fontSize: "1.5em",
+              },
+            },
+            series: [
+              {
+                name: "Years",
+                data: dataset,
+              },
+            ],
+          });
+        });
+    </script>
+    <style>
+      div {
+        height: 98vh;
+        margin-left: auto;
+        margin-right: auto;
+        width: 90vw;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+</html>
